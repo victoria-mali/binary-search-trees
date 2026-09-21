@@ -42,9 +42,37 @@ class Tree {
     if (root.value < value) {
       return this.includes(value, root.rightChild);
     }
-    
+
     if (root.value > value) {
       return this.includes(value, root.leftChild);
+    }
+  }
+
+  insert(value, root = this.root) {
+    let newNode = new Node(value);
+    if (root === null) {
+      this.root = newNode;
+      return;
+    }
+
+    if (root.value === value) {
+      return;
+    }
+
+    if (root.value > value && root.leftChild === null) {
+      return (root.leftChild = newNode);
+    }
+
+    if (root.value < value && root.rightChild === null) {
+      return (root.rightChild = newNode);
+    }
+
+    if (root.value < value) {
+      return this.insert(value, root.rightChild);
+    }
+
+    if (root.value > value) {
+      return this.insert(value, root.leftChild);
     }
   }
 }
@@ -59,7 +87,11 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
   prettyPrint(node.leftChild, `${prefix}${isLeft ? "    " : "│   "}`, true);
 };
 
-const testTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+const testTree = new Tree([]);
 //console.log(testTree.root);
 // prettyPrint(testTree.root);
-console.log(testTree.includes(7));
+//console.log(testTree.includes(7));
+console.log(testTree.insert(18));
+prettyPrint(testTree.root);
+
+//prettyPrint(testTree.root);
